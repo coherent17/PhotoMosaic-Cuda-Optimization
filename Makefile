@@ -34,7 +34,7 @@ all: $(TARGET)
 $(OBJDIR):
 	@mkdir $(OBJDIR)
 
-PhotoMosaic: main.cpp $(OBJS) $(OBJDIR)/data_loader.o
+PhotoMosaic: main.cpp $(OBJS) $(OBJDIR)/photo_mosaic_cuda.o
 	$(VECHO) "	LD\t$@\n"
 	$(Q)$(CXX) $(CXXFLAGS) $^ -o $@ $(LINKER)
 
@@ -44,6 +44,11 @@ PhotoMosaic: main.cpp $(OBJS) $(OBJDIR)/data_loader.o
 
 # Compilation rule for object files with automatic dependency generation
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp | $(OBJDIR) Makefile
+	$(VECHO) "	NVCC\t$@\n"
+	$(Q)$(CXX) $(CXXFLAGS) -MMD -c $< -o $@
+
+# Compilation rule for object file with cuda
+$(OBJDIR)/photo_mosaic_cuda.o: $(SRCDIR)/photo_mosaic_cuda.cu | $(OBJDIR) Makefile
 	$(VECHO) "	NVCC\t$@\n"
 	$(Q)$(CXX) $(CXXFLAGS) -MMD -c $< -o $@
 

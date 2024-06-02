@@ -1,6 +1,11 @@
 # PhotoMosaic-Cuda-Optimization
 Using Cuda to perform data level parallelism
 
+## Install third-party open source code
+```bash=
+$ make install
+```
+
 ## Install NVCC
 ```bash=
 $ sudo apt-get update
