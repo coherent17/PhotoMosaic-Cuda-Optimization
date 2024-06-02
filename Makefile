@@ -1,9 +1,7 @@
 # ompiler & Linker settings
-CXX = g++
+CXX = nvcc
 CXXFLAGS = -I ./inc -I ./third-party/CImg -I ./third-party/libjpeg -I ./Data-Loader -std=c++11
-OPTFLAGS = -march=native -flto -funroll-loops -finline-functions -ffast-math -O3
-WARNINGS = -g -Wall
-LINKER = -L/usr/X11R6/lib -lm -lpthread -lX11 -L./third-party/libjpeg -ljpeg -lpng
+LINKER = -L/usr/X11R6/lib -lm -lX11 -L./third-party/libjpeg -ljpeg -lpng
 
 # Valgrind for memory issue
 CHECKCC = valgrind
@@ -29,35 +27,25 @@ endif
 .PHONY: all install check clean
 
 # Name of the executable
-TARGET = Image_Processing Data_Loader_Example
+TARGET = PhotoMosaic
 
 all: $(TARGET)
 
 $(OBJDIR):
 	@mkdir $(OBJDIR)
 
-Image_Processing: main.cpp $(OBJS) $(OBJDIR)/data_loader.o
+PhotoMosaic: main.cpp $(OBJS) $(OBJDIR)/data_loader.o
 	$(VECHO) "	LD\t$@\n"
-	$(Q)$(CXX) $(WARNINGS) $(CXXFLAGS) $(OPTFLAGS) $^ -o $@ $(LINKER)
+	$(Q)$(CXX) $(CXXFLAGS) $^ -o $@ $(LINKER)
 
-Data_Loader_Example: data_loader_demo.cpp $(OBJDIR)/data_loader.o
-	$(VECHO) "	LD\t$@\n"
-	$(Q)$(CXX) $(WARNINGS) $(CXXFLAGS) $(OPTFLAGS) $^ -o $@ $(LINKER)
 
 # Include generated dependency files
 -include $(DEPS)
 
 # Compilation rule for object files with automatic dependency generation
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp | $(OBJDIR) Makefile
-	$(VECHO) "	CC\t$@\n"
-	$(Q)$(CXX) $(WARNINGS) $(CXXFLAGS) $(OPTFLAGS) -MMD -c $< -o $@
-
-# Compilation rule for data_loader.o with explicit dependencies
-$(OBJDIR)/data_loader.o: ./Data-Loader/data_loader.cpp ./Data-Loader/data_loader.h | $(OBJDIR) Makefile
-	$(VECHO) "	CC\t$@\n"
-	$(Q)$(CXX) $(WARNINGS) $(CXXFLAGS) $(OPTFLAGS) -MMD -c $< -o $@
-
-
+	$(VECHO) "	NVCC\t$@\n"
+	$(Q)$(CXX) $(CXXFLAGS) -MMD -c $< -o $@
 
 install:
 	$(VECHO) "Installing third party dependencies\n"

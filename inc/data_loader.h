@@ -28,10 +28,6 @@ public:
     int ***Load_RGB(string filename, int *w, int *h);
     void Dump_Gray(int w, int h, int **pixels, string filename);
     void Dump_RGB(int w, int h, int ***pixels, string filename);
-    void Display_Gray_X_Server(int w, int h, int **pixels);
-    void Display_RGB_X_Server(int w, int h, int ***pixels);
-    void Display_Gray_ASCII(int w, int h, int **pixels);
-    void Display_RGB_ASCII(int w, int h, int ***pixels);
     void Display_Gray_CMD(string filename);
     void Display_RGB_CMD(string filename);
     bool List_Directory(string directoryPath, vector<string> &filenames);
