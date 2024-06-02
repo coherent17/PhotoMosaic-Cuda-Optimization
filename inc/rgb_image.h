@@ -4,7 +4,7 @@
 #include "image.h"
 
 class RGBImage : public Image{
-private:
+public:
     int ***pixels;
     double r_avg;
     double g_avg;
@@ -18,6 +18,9 @@ public:
     bool LoadImage(string filename);
     void DumpImage(string filename);
     void Display_CMD();
+
+    friend class Photo_Mosaic_Serial;
+    friend class Photo_Mosaic_CUDA;
 };
 
 #endif

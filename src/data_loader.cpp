@@ -163,6 +163,7 @@ void Data_Loader::Display_RGB_CMD(string filename){
 }
 
 bool Data_Loader::List_Directory(string directoryPath, vector<string> &filenames) {
+    vector<string> vec_filenames;
     struct dirent *entry;
     DIR *dp;
 
