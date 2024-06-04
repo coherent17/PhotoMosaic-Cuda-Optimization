@@ -10,13 +10,12 @@ private:
     static Data_Loader data_loader;
     RGBImage target_img;
     int num_candidate_imgs;
-    std::vector<std::string> candidate_img_filenames;
-    RGBImage *candidate_imgs;
+    vector<string> candidate_img_filenames;
 
 public:
     Photo_Mosaic_CUDA();
     ~Photo_Mosaic_CUDA();
-    RGBImage *Run(const std::string &targetImgPath, const std::string &candidateImgFolderPath);
+    RGBImage *Run(string targetImgPath, string candidateImgFolderPath);
 };
 
 #endif
