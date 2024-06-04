@@ -12,6 +12,14 @@ RGBImage::RGBImage(int w, int h) : Image(w, h){
             pixels[i][j] = new int[3];
         }
     }
+
+    for(int i = 0; i < h; i++){
+        for(int j = 0; j < w; j++){
+            pixels[i][j][0] = 0;
+            pixels[i][j][1] = 0;
+            pixels[i][j][2] = 0;
+        }
+    }
 }
 
 RGBImage::RGBImage(int w, int h, int ***pixels) : Image(w, h){
