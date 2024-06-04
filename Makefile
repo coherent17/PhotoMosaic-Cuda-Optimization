@@ -34,7 +34,7 @@ all: $(TARGET)
 $(OBJDIR):
 	@mkdir $(OBJDIR)
 
-PhotoMosaic: main.cpp $(OBJS) #$(OBJDIR)/photo_mosaic_cuda.o
+PhotoMosaic: main.cpp $(OBJS) $(OBJDIR)/photo_mosaic_cuda.o
 	$(VECHO) "	LD\t$@\n"
 	$(Q)$(CXX) $(CXXFLAGS) $^ -o $@ $(LINKER)
 
@@ -62,4 +62,4 @@ check:
 	$(CHECKCC) $(CHECKFLAGS) ./Image_Processing
 
 clean:
-	rm -rf $(OBJDIR) $(TARGET)
+	rm -rf $(OBJDIR) $(TARGET) *.jpg
