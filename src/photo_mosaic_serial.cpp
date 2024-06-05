@@ -71,10 +71,10 @@ RGBImage *Photo_Mosaic_Serial::Run(string targetImgPath, string candidateImgFold
         b_avg_candidate[i] = candidate_imgs[i].b_avg;
     }
 
-    // cudaEvent_t start, stop;
-    // cudaEventCreate(&start);
-    // cudaEventCreate(&stop);
-    // cudaEventRecord(start, 0);
+    cudaEvent_t start, stop;
+    cudaEventCreate(&start);
+    cudaEventCreate(&stop);
+    cudaEventRecord(start, 0);
     for(int i = 0; i < tile_width * tile_height; i++){
         double min_diff = DBL_MAX;
         for(int j= 0; j < num_candidate_imgs; j++){
@@ -89,11 +89,11 @@ RGBImage *Photo_Mosaic_Serial::Run(string targetImgPath, string candidateImgFold
         }
     }
 
-    // cudaEventRecord(stop, 0);
-    // cudaEventSynchronize(stop);
-    // float elapsedTime;
-    // cudaEventElapsedTime(&elapsedTime, start, stop);
-    // printf("[Serial]Elapsed time: %f ms\n", elapsedTime);
+    cudaEventRecord(stop, 0);
+    cudaEventSynchronize(stop);
+    float elapsedTime;
+    cudaEventElapsedTime(&elapsedTime, start, stop);
+    printf("[Serial]Elapsed time: %f ms\n", elapsedTime);
     
     int count = 0;
     for(int row = 0; row < target_img.get_h() - SUB_PIC_SIZE; row += SUB_PIC_SIZE){
