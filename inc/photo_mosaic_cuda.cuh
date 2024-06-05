@@ -6,7 +6,7 @@
 
 #define SUB_PIC_SIZE 32
 #define NUM_CANDIDATE_IMGS 10000
-#define THREADS_PER_BLOCK 512
+#define THREADS_PER_BLOCK 256
 #define IMAGE_DBL_MAX 300
 
 class Photo_Mosaic_Cuda{

@@ -128,6 +128,10 @@ RGBImage *Photo_Mosaic_Cuda::Run(string targetImgPath, string candidateImgFolder
     cudaMemcpy(d_b_avg_candidate, b_avg_candidate, sizeof(double) * num_candidate_imgs, cudaMemcpyHostToDevice);
 
     // for each grid image in target image, find the best fit candidate image from cifar10
+    cudaEvent_t start, stop;
+    cudaEventCreate(&start);
+    cudaEventCreate(&stop);
+    cudaEventRecord(start, 0);
     find_min_idx<<<(tile_width * tile_height + THREADS_PER_BLOCK - 1) / THREADS_PER_BLOCK, THREADS_PER_BLOCK>>>(
         d_r_avg_target_grid,
         d_g_avg_target_grid,
@@ -141,7 +145,12 @@ RGBImage *Photo_Mosaic_Cuda::Run(string targetImgPath, string candidateImgFolder
         d_min_idxs
     );
 
-    cudaDeviceSynchronize();
+    cudaEventRecord(stop, 0);
+    cudaEventSynchronize(stop);
+    float elapsedTime;
+    cudaEventElapsedTime(&elapsedTime, start, stop);
+    printf("[CUDA]Elapsed time: %f ms\n", elapsedTime);
+
     cudaMemcpy(min_idxs, d_min_idxs, sizeof(int) * tile_width * tile_height, cudaMemcpyDeviceToHost);
 
     int count = 0;

@@ -4,6 +4,7 @@
 #define SUB_PIC_SIZE 32
 #define NUM_CANDIDATE_IMGS 10000
 #include "rgb_image.h"
+#include <cuda_runtime.h>
 
 class Photo_Mosaic_Serial{
 private:

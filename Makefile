@@ -34,7 +34,7 @@ all: $(TARGET)
 $(OBJDIR):
 	@mkdir $(OBJDIR)
 
-PhotoMosaic: main.cpp $(OBJS) $(OBJDIR)/photo_mosaic_cuda.o
+PhotoMosaic: main.cu $(OBJS) $(OBJDIR)/photo_mosaic_cuda.o
 	$(VECHO) "	LD\t$@\n"
 	$(Q)$(CXX) $(CXXFLAGS) $^ -o $@ $(LINKER)
 
@@ -59,7 +59,7 @@ install:
 	$(VECHO) "Finished installing third party dependencies!!\n"
 
 check:
-	$(CHECKCC) $(CHECKFLAGS) ./Image_Processing
+	$(CHECKCC) $(CHECKFLAGS) ./PhotoMosaic
 
 clean:
 	rm -rf $(OBJDIR) $(TARGET) *.jpg
