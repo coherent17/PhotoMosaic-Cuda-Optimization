@@ -150,6 +150,7 @@ RGBImage *Photo_Mosaic_Cuda::Run(string targetImgPath, string candidateImgFolder
     float elapsedTime;
     cudaEventElapsedTime(&elapsedTime, start, stop);
     printf("[CUDA]Elapsed time: %f ms\n", elapsedTime);
+    printf("[CUDA](Tile_Width, Tile_Height) = (%d, %d)\n", tile_width, tile_height);
 
     cudaMemcpy(min_idxs, d_min_idxs, sizeof(int) * tile_width * tile_height, cudaMemcpyDeviceToHost);
 

@@ -1,6 +1,6 @@
 # ompiler & Linker settings
 CXX = nvcc
-CXXFLAGS = -I ./inc -I ./third-party/CImg -I ./third-party/libjpeg -I ./Data-Loader -std=c++11
+CXXFLAGS = -I ./inc -I ./third-party/CImg -I ./third-party/libjpeg -I ./Data-Loader -std=c++11 -Xptxas -O3
 LINKER = -L/usr/X11R6/lib -lm -lX11 -L./third-party/libjpeg -ljpeg -lpng
 
 # Valgrind for memory issue

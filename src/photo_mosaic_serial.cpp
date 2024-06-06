@@ -94,6 +94,7 @@ RGBImage *Photo_Mosaic_Serial::Run(string targetImgPath, string candidateImgFold
     float elapsedTime;
     cudaEventElapsedTime(&elapsedTime, start, stop);
     printf("[Serial]Elapsed time: %f ms\n", elapsedTime);
+    printf("[Serial](Tile_Width, Tile_Height) = (%d, %d)\n", tile_width, tile_height);
     
     int count = 0;
     for(int row = 0; row < target_img.get_h() - SUB_PIC_SIZE; row += SUB_PIC_SIZE){
