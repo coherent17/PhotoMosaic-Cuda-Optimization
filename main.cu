@@ -1,11 +1,33 @@
 #include "data_loader.h"
 #include "photo_mosaic_serial.h"
 #include "photo_mosaic_cuda.cuh"
+#include <cuda_runtime.h>
+#include <iostream>
 
 #define DUMP_IMAGE true
 #define CMD_IMAGE true
 
+void checkCudaDevices() {
+    int deviceCount;
+    cudaGetDeviceCount(&deviceCount);
+    if (deviceCount == 0) {
+        std::cerr << "No CUDA-compatible devices found." << std::endl;
+        return;
+    }
+
+    for (int device = 0; device < deviceCount; ++device) {
+        cudaDeviceProp deviceProp;
+        cudaGetDeviceProperties(&deviceProp, device);
+        std::cout << "Device " << device << ": " << deviceProp.name << std::endl;
+        std::cout << "  Total Global Memory: " << deviceProp.totalGlobalMem << std::endl;
+        std::cout << "  Multiprocessors: " << deviceProp.multiProcessorCount << std::endl;
+        std::cout << "  Compute Capability: " << deviceProp.major << "." << deviceProp.minor << std::endl;
+    }
+}
+
 int main(){
+
+	checkCudaDevices();
 
 	Photo_Mosaic_Serial *photo_mosaic_serial;
 	Photo_Mosaic_Cuda *photo_mosaic_cuda;
